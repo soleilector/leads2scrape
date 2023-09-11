@@ -1,5 +1,5 @@
 # leads2scrape
-Scrape some leads for your B2B
+Scrape some authentic leads for your B2B
 
 ### How to use
 1. Open _Leads2Scrape_ jar file
