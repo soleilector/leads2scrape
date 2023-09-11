@@ -8,4 +8,4 @@ Scrape some leads for your B2B
 4. Wait until _Export_ button turns yellow again.
 5. Check file path for file.
 
-![Example](https://imgur.com/OIIH9IK)
+![image](https://github.com/soleilector/leads2scrape/assets/144566342/f0e0b365-58d1-463b-8786-618ec13b1edb)
