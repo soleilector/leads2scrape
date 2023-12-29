@@ -84,7 +84,8 @@ public class WriteToCSV {
 			System.out.println(path);
 		}
 		if (path!=null) {
-			try (CSVWriter writer = new CSVWriter(new FileWriter(path))) {
+			try (
+				CSVWriter writer = new CSVWriter(new FileWriter(path))) {
 				writer.writeAll(csvList);
 			} catch(Exception e) {
 				System.out.println("ERROR: DATA FAILED TO SAVE");
