@@ -1,7 +1,3 @@
-// NOTE!
-// Implement JavaFX for more accessible user interface
-// 34 Layout
-// Add more lead sources!!!
 import org.jsoup.*; 
 import org.jsoup.nodes.*; 
 import org.jsoup.select.*;
@@ -212,6 +208,7 @@ public class Drive {
 		setFont(new Font("Lucida Console",Font.BOLD,18)); // set font sisze of the window
 		setLayout(new FlowLayout(FlowLayout.CENTER,50,0)); // set the layout of the results title label
 		setBackground(Color.black);
+		setForeground(Color.white);
 	}};
 	
 	static JButton backToMainBTN = new JButton() {{
@@ -225,7 +222,7 @@ public class Drive {
 	
 	static JPanel resultsToolbarPanel = new JPanel() {{
 		setPreferredSize(new Dimension(500,100));
-		setBackground(Color.CYAN);
+		setBackground(Color.black);
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
 		add(backToMainBTN);
 		add(resultsTitleLbl);
@@ -236,6 +233,9 @@ public class Drive {
 		setPreferredSize(new Dimension(50,50));
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
 		setBackground(Color.black);
+		setForeground(Color.white);
+		setFocusPainted(false);
+		setBorder(null);
 		setText("N");
 	}};
 	
@@ -243,6 +243,9 @@ public class Drive {
 		setPreferredSize(new Dimension(50,50));
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
 		setBackground(Color.black);
+		setForeground(Color.white);
+		setFocusPainted(false);
+		setBorder(null);
 		setText("P");
 	}};
 	
@@ -252,12 +255,14 @@ public class Drive {
 		setBackground(Color.black);
 		setForeground(Color.white);
 		setText("I");
+		setFocusPainted(false);
+		setBorder(null);
 	}};
 	
 	static JPanel resultsViewToolbar = new JPanel() {{
 		setPreferredSize(new Dimension(50,400));
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
-		setBackground(Color.red);
+		setBackground(Color.white);
 		add(resultsPreviousPage);
 		add(resultsNextPage);
 		add(resultsInfo);
@@ -271,7 +276,7 @@ public class Drive {
 	
 	static JPanel bizInfoPanel = new JPanel() {{
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
-		setBackground(Color.magenta);
+		setBackground(Color.white);
 		setPreferredSize(new Dimension(450,400));
 		add(bizInfoLabel);
 		setVisible(false);
@@ -280,7 +285,7 @@ public class Drive {
 	static JPanel resultsListPanel = new JPanel() {{
 		setPreferredSize(new Dimension(450,400));
 		setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
-		setBackground(Color.green);
+		setBackground(Color.white);
 	}};
 	
 	static JPanel resultsViewPanel = new JPanel() {{
@@ -362,43 +367,18 @@ public class Drive {
 						);
 				
 				String paginationStr = "&page=%d";
-				int pagesToScrape = 1;
+				int pagesToScrape = 5;
 				
 				System.out.println("Testing...");
 				
 				searchResults = getResults(link,pagesToScrape,paginationStr);
-				
-				/*
 				ArrayList<HashMap<String,String>> allResults = getResultsCombined(searchResults);
-				paginatedResults = paginateRecords(allResults, 5);
-				
-				//currentResultsPage = ;
+				paginatedResults = paginateRecords(allResults, 7);
 				paintResults(paginatedResults,currentResultsPage);
-				
-				*/
 				
 				splashPanel.setVisible(false);
 				mainPanel.setVisible(false);
 				resultsPanel.setVisible(true);
-				
-				/*
-				System.out.println("Processing...");
-				String linkA = "https://www.yellowpages.com/search?search_terms=%s";
-				String linkB = "&geo_location_terms=%s, %s";
-				String link = String.format(linkA, keywordField.getText())+String.format(linkB, cityField.getText(), stateField.getText());
-				
-				String paginationStr = "&page=%d";
-				//int scrapeLimit = 5;
-				//Document doc; 
-				
-				// fetching the target website 
-				//doc = Jsoup.connect(link).get();
-				HashMap<String,String>[][] searchResults = getResults(link,3,paginationStr);
-
-				writeResults(keywordField.getText(),searchResults);
-				
-				exportBTN.setText("<html><p style='font-size:24px;'>EXPORT</p></html>");
-				*/
 				
 				exportBTN.setText("<html><p style='font-size:18px;'>SEARCH</p></html>");
 				
@@ -511,11 +491,8 @@ public class Drive {
 	
 	private static boolean canOpenBizInfoPanel = true;
 	
-	//private static void paintResults(HashMap<String,String>[][] searchResults,int page) {
 	private static void paintResults(ArrayList<HashMap<String,String>>[] paginatedResults, int page) {
 		resultsListPanel.removeAll();
-		//ArrayList<HashMap<String,String>> allResults = getResultsCombined(searchResults);
-		//ArrayList<HashMap<String,String>>[] paginatedResults = paginateRecords(allResults, 3);
 		
 		ArrayList<HashMap<String,String>> thisPage = paginatedResults[page];
 		for (int rId = 0; rId < thisPage.size(); rId++) {
@@ -533,13 +510,7 @@ public class Drive {
 					setBackground(Color.white);
 					setForeground(Color.black);
 				}};
-				//JLabel.CENTER
-				/*
-				private static ActionListener pressBTN = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-				*/
+				
 				thisBizBTN.addActionListener(new ActionListener() {
 					@Override
 					
@@ -582,58 +553,10 @@ public class Drive {
 				}};
 				
 				resultsListPanel.add(thisRecord);
-				/*
-				thisCSV.addRecord(total, bizInfo);
-				System.out.printf("%d) %s\n\tPhone: %s\n\tWebsite: %s %s\n\tAddress: %s\n",
-						bizId,
-						bizInfo.get("name"),
-						bizInfo.get("phone"),
-						bizInfo.get("websiteDown"),
-						bizInfo.get("website"),
-						bizInfo.get("streetAddress")+" "+bizInfo.get("locality"));
-				total ++;
-				*/
 			}
 			resultsListPanel.revalidate();
 			resultsListPanel.repaint();
 		}
-		
-		/*
-		HashMap<String,String>[] thisPage = searchResults[page];
-		if (thisPage != null) {
-			for (int bizId = 1;bizId<thisPage.length;++bizId) {
-				HashMap<String,String> bizInfo = thisPage[bizId];
-				
-				//resultsListPanel.removeAll();
-				
-				if (bizInfo!=null) {
-					System.out.println("Creating information for this business information...");
-					JLabel thisBizName = new JLabel(bizInfo.get("name"),JLabel.CENTER) {{
-						setPreferredSize(new Dimension(450,25));
-					}};
-					JPanel thisRecord = new JPanel() {{
-						setBackground(Color.white);
-						setPreferredSize(new Dimension(450,50));
-						setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
-						add(thisBizName);
-					}};
-					resultsListPanel.add(thisRecord);
-					/*
-					thisCSV.addRecord(total, bizInfo);
-					System.out.printf("%d) %s\n\tPhone: %s\n\tWebsite: %s %s\n\tAddress: %s\n",
-							bizId,
-							bizInfo.get("name"),
-							bizInfo.get("phone"),
-							bizInfo.get("websiteDown"),
-							bizInfo.get("website"),
-							bizInfo.get("streetAddress")+" "+bizInfo.get("locality"));
-					total ++;
-				}
-				resultsListPanel.revalidate();
-				resultsListPanel.repaint();
-			}
-		}
-		*/
 	}
 	
 	private static void writeResults(String keywords, HashMap<String,String>[][] searchResults) {
@@ -836,7 +759,6 @@ public class Drive {
 					pageResults[thisct].put("name", bizNameElement.text());
 					pageResults[thisct].put("phone", phoneElement.text());
 					pageResults[thisct].put("website", (hasWebsite ? websiteElement.attr("href") : "none")); // defines website's URL or that it has no website
-					//boolean isWebsiteUp = (attemptPageAccess(websiteElement.attr("href"))!=null);
 					pageResults[thisct].put("websiteDown",
 								(
 									(
